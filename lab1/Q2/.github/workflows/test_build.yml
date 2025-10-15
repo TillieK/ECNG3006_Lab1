@@ -1,0 +1,31 @@
+name: Test and build
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+      - name: Test
+        shell: bash
+        run: |
+          make clean test
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+      - name: Compile
+        shell: bash
+        run: |
+          make clean
+          make
+          make install
